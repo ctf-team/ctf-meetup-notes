@@ -1,0 +1,89 @@
+# Meetup Notes - April 6th, 2019
+
+## Topic: Encryption
+
+- What is encryption?
+    - Encryption is the method of converting any type of information/data into an unreadable format to prevent unauthorized access to data.
+- How does it work?
+    - Many types of encryption use a type of cipher to manipulate data, using some type of "key" or "password" to transform the data both ways.
+         - Also called symmetric encryption.
+         - https://www.ssl2buy.com/wiki/wp-content/uploads/2015/12/Symmetric-Encryption.png
+         - https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation
+    - Some other types of encryption use a special cipher that uses two types of keys, one public (to encrypt) and private (to decrypt) to transform the data.
+         - Also called asymmetric encryption.
+         - https://www.ssl2buy.com/wiki/wp-content/uploads/2015/12/Asymmetric-Encryption.png
+         - Mostly used in key exchanges.
+            - A key exchange requires a standard of two parties, both with their own sets of public and private keys.
+            - Both parties exchange public keys, and do not exchange their private keys.
+            - Afterwards, any further messages sent can be encrypted with the other parties' public key, and when the other party receives the data, can decrypt that data with their own private key.
+    - Also a type of encryption called "hashing" that is irreversible.
+         - Weak hashing can cause "collisions"
+            - Collisions are when two different pieces of data can generate the same "hashed" output.
+         - Some popular methods of hashing:
+            - MD5 (insecure, collisions found)
+            - SHA-1 (insecure, collisions found)
+            - SHA-256
+            - SHA-384
+            - SHA-512
+            - HMAC
+- What are the most popular methods of encryption (for symmetrical and asymmetrical)?
+    - Symmetrical
+        - AES
+        - DES/TripleDES (DES is weak and replaced by 3DES)
+        - Blowfish
+        - XOR
+        - etc
+    - Asymmetrical
+        - RSA/PKCS#1 (https://en.wikipedia.org/wiki/RSA_(cryptosystem)
+        - Diffie-Hellman (used in symmetric key exchange, https://en.wikipedia.org/wiki/Diffie%E2%80%93Hellman_key_exchange)
+        - DSA (https://en.wikipedia.org/wiki/Digital_Signature_Algorithm)
+        - Elliptic Curve (https://en.wikipedia.org/wiki/Elliptic-curve_cryptography)
+- Why do we need encryption in a modern world?
+    - It's more secure than a post-it note on a monitor.
+    - It prevents unauthorized parties from accessing data.
+    - It can keep information safe and secure.
+    - Plenty more reasons....
+- SSL (Secure Sockets Layer)
+    - What is SSL?
+        - A way to establish an encrypted connection between a server and client.
+        - Useful to prevent traffic sniffing and man in the middle.
+    - How does SSL work?
+        - SSL uses a cipher (any particular method of encryption) and a handshake between usually a webserver and web browser (but not restricted to such).
+        - When the initial handshake is completed (with key exchange), a symmetrical key is then passed between server and client to encrypt future data with.
+    - Why use a symmetric cipher for data transfer?
+        - Symmetric ciphers are faster than asymmetric ciphers.
+    - Why was SSL insecure?
+        - Several exploits over the years (see SSL POODLE https://www.us-cert.gov/ncas/alerts/TA14-290A)
+- TLS (Transport Layer Security)
+    - What is TLS?
+        - The successor to SSL.
+        - More secure, by utilizing better ciphers, and utilizing better key exchange protocols (diffie-hellman, elliptic curve [and the combination of both, ECDH], x25519 and x448).
+        - Exploits in implementations (see Heartbleed http://heartbleed.com/)
+    - See https://en.wikipedia.org/wiki/Transport_Layer_Security
+- What is a SSL certificate?
+    - Not actually "SSL" certificates, this is a common misconception.
+    - Provides a public/private key that has been **signed** by a trusted entity.
+    - Used a lot in web servers, such as nginx or apache, to initiate SSL/TLS to any connecting clients, and to validate ownership of the domain.
+    - This way, we can "validate" whether or not said keys are valid for said domain.
+- How can we use SSL certificates with TLS compatibility?
+    - SSL certificates are not dependent on protocols.
+- What are some reasons to use encryption in code?
+    - To maintain data integrity by preventing modification of files used by software.
+    - Protecting configuration files.
+    - Protecting any private data (i.e customer data, business logic, etc).
+- What is a good example of encryption in code?
+    - See code examples in src folder.
+- What are good encryption libraries to use for certain programming languages?
+    - A great source for all things crypto: https://github.com/sobolevn/awesome-cryptography
+- Disk encryption tools in operating systems
+    - Linux (https://wiki.archlinux.org/index.php/disk_encryption)
+        - dm-crypt (with LUKS and encrypted swap)
+        - TrueCrypt/VeraCrypt
+    - Windows
+        - Bitlocker
+        - TrueCrypt/VeraCrypt
+- Malicious uses for encryption
+    - Malware
+        - Malicious software developers will implement ways to hide their malware by using encryption to prevent antivirus software from detecting the malware.
+    - Ransomware
+        - These programs will start encrypting files on your disk and force you to pay to decrypt them.       
